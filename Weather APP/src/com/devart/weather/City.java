@@ -70,18 +70,23 @@ public class City {
     }
 
     // add city
-    public void addCity(City city, Connection connection) throws SQLException {
+    public void addCity(Connection connection) throws SQLException {
         String sql = "INSERT INTO City (cityId, cityName, currentTemperature, currentHumidity, currentWindSpeed) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setInt(1, city.getCityId());
-        statement.setString(2, city.getCityName());
-        statement.setInt(3, city.getCurrentTemperature());
-        statement.setInt(4, city.getCurrentHumidity());
-        statement.setInt(5, city.getCurrentWindSpeed());
-        statement.executeUpdate();
+        statement.setInt(1, getCityId());
+        statement.setString(2, getCityName());
+        statement.setInt(3, getCurrentTemperature());
+        statement.setInt(4, getCurrentHumidity());
+        statement.setInt(5, getCurrentWindSpeed());
+        int r = statement.executeUpdate();
+        if (r>0){
+            System.out.println("City added successfully!");
+        }
+        else {
+            System.out.println("City not add");
+        }
         connection.close();
         statement.close();
-        System.out.println("City added successfully!");
     }
 
     // display all cities
@@ -104,15 +109,33 @@ public class City {
         return cities;
     }
 
+    // search by id
+    public City searchCityById(int idCity, Connection connection) throws SQLException {
+        String sql = "SELECT * FROM City WHERE cityId = ?";
+        PreparedStatement ps = connection.prepareStatement(sql);
+        ps.setInt(1, idCity);
+        ResultSet rs = ps.executeQuery();
+        City city = null;
+        if (rs.next()) {
+            city = new City();
+            city.setCityId(rs.getInt("cityId"));
+            city.setCityName(rs.getString("cityName"));
+            city.setCurrentTemperature(rs.getInt("currentTemperature"));
+            city.setCurrentHumidity(rs.getInt("currentHumidity"));
+            city.setCurrentWindSpeed(rs.getInt("currentWindSpeed"));
+        }
+        return city;
+    }
+
     // update city
-    public void updateCity(City city, Connection connection) throws SQLException {
+    public void updateCity(Connection connection) throws SQLException {
         String sql = "UPDATE City SET cityName = ?, currentTemperature = ?, currentHumidity = ?, currentWindSpeed = ? WHERE cityId = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
-        statement.setString(1, city.getCityName());
-        statement.setInt(2, city.getCurrentTemperature());
-        statement.setInt(3, city.getCurrentHumidity());
-        statement.setInt(4, city.getCurrentWindSpeed());
-        statement.setInt(5, city.getCityId());
+        statement.setString(1, getCityName());
+        statement.setInt(2, getCurrentTemperature());
+        statement.setInt(3, getCurrentHumidity());
+        statement.setInt(4, getCurrentWindSpeed());
+        statement.setInt(5, getCityId());
         statement.executeUpdate();
         connection.close();
         statement.close();
@@ -122,7 +145,7 @@ public class City {
 
     // delete city
     public void deleteCity(int cityId, Connection connection) throws SQLException {
-        String sql = "DELETE FROM City WHERE id = ?";
+        String sql = "DELETE FROM City WHERE cityId = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, cityId);
         statement.executeUpdate();
@@ -132,14 +155,8 @@ public class City {
     }
 
     // method to string
-
     @Override
     public String toString() {
-        return "City{" +
-                ", cityName='" + cityName + '\'' +
-                ", currentTemperature=" + currentTemperature +
-                ", currentHumidity=" + currentHumidity +
-                ", currentWindSpeed=" + currentWindSpeed +
-                '}';
+        return "City ID: " + cityId + "|---| City Name: " + cityName + "|---| Current Temperature: " + currentTemperature + "|---| Current Humidity: " + currentHumidity + "|---| currentWindSpeed: " + currentWindSpeed + "\n";
     }
 }
