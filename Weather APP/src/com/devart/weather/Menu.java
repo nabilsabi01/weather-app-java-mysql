@@ -114,13 +114,13 @@ public class Menu {
                 cityHistory.setEventDate(eventDate);
                 System.out.println("Température historique: ");
                 cityHistory.setTemperature(sc.nextInt());
-                cityHistory.addCityHistory(ConnectionDB.getConnection());
+                cityHistory.updateCityHistory(ConnectionDB.getConnection());
                 break;
             case 4:
-                city = new City();
+                cityHistory = new CityHistory();
                 System.out.println("Identifiant de la historiques: ");
                 int id = sc.nextInt();
-                city.deleteCity(id, ConnectionDB.getConnection());
+                cityHistory.deleteCityHistory(id, ConnectionDB.getConnection());
                 break;
             case 5:
                 return;

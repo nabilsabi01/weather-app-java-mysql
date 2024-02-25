@@ -67,7 +67,7 @@ public class CityHistory {
         statement.executeUpdate();
         connection.close();
         statement.close();
-        System.out.println("City history added successfully!");
+        System.out.println("L'histoire de la ville a été ajoutée avec succès!");
     }
 
     // display all city histories
@@ -101,29 +101,28 @@ public class CityHistory {
         statement.executeUpdate();
         connection.close();
         statement.close();
-        System.out.println("City history updated successfully!");
-
+        System.out.println("L'histoire de la ville a été mise à jour avec succès!");
     }
 
     // delete city
-    public void deleteCity(int historicalDataId, Connection connection) throws SQLException {
+    public void deleteCityHistory(int historicalDataId, Connection connection) throws SQLException {
         String sql = "DELETE FROM CityHistory WHERE historicalDataId = ?";
         PreparedStatement statement = connection.prepareStatement(sql);
         statement.setInt(1, historicalDataId);
         statement.executeUpdate();
         connection.close();
         statement.close();
-        System.out.println("City history deleted successfully!");
+        System.out.println("L'historique de la ville a été supprimé avec succès!");
     }
 
     // to string method
     @Override
     public String toString() {
-        return "CityHistory{" +
-                "historicalDataId=" + historicalDataId +
-                ", city=" + cityId +
-                ", eventDate=" + eventDate +
-                ", temperature=" + temperature +
-                '}';
+        return "|-----------------------------------------------|"+
+                "\n|\t\t\tHistorical Data Id: " + historicalDataId +
+                "\n\t\t\tCity Id: " + cityId +
+                "\n\t\t\tEvent Date: " + eventDate +
+                "\n\t\t\tTemperature: " + temperature +
+                "|-----------------------------------------------|";
     }
 }

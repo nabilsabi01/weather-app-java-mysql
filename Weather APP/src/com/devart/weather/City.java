@@ -80,10 +80,10 @@ public class City {
         statement.setInt(5, getCurrentWindSpeed());
         int r = statement.executeUpdate();
         if (r>0){
-            System.out.println("City added successfully!");
+            System.out.println("La ville ajoutée avec succès!");
         }
         else {
-            System.out.println("City not add");
+            System.out.println("La ville n'a pas ajouté");
         }
         connection.close();
         statement.close();
@@ -139,7 +139,7 @@ public class City {
         statement.executeUpdate();
         connection.close();
         statement.close();
-        System.out.println("City updated successfully!");
+        System.out.println("La ville a été mise à jour avec succès!");
 
     }
 
@@ -151,12 +151,18 @@ public class City {
         statement.executeUpdate();
         connection.close();
         statement.close();
-        System.out.println("Student deleted successfully!");
+        System.out.println("La ville a été supprimée avec succès !");
     }
 
     // method to string
     @Override
     public String toString() {
-        return "City ID: " + cityId + "|---| City Name: " + cityName + "|---| Current Temperature: " + currentTemperature + "|---| Current Humidity: " + currentHumidity + "|---| currentWindSpeed: " + currentWindSpeed + "\n";
+        return "|-----------------------------------------------|"+
+                "\nCity ID: " + cityId +
+                "\nCity Name: " + cityName +
+                "\nCurrent Temperature: " + currentTemperature +
+                "\nCurrent Humidity: " + currentHumidity +
+                "\nCurrent Wind Speed: " + currentWindSpeed +
+                "|-----------------------------------------------|";
     }
 }
